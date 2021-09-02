@@ -48,3 +48,56 @@ body {
     height: 193px;
     object-fit: contain;
 }
+
+.sessions-list {
+    padding: 0px 50px;
+}
+
+.sessions-list .schedule .date {
+    font-size: 20px;
+    color: #293845;
+    margin-bottom: 24px;
+}
+
+.sessions-list .schedule .sessions {
+    display: flex;
+    align-items: center;
+}
+
+.sessions-list .schedule .sessions .time {
+    width: 83px;
+    height: 43px;
+    line-height: 43px;
+    background-color: #E8833A;
+    color: #FFFFFF;
+    font-size: 18px;
+    border-radius: 3px;
+    text-align: center;
+    margin: 0 10px 28px 0;
+}
+
+.movie-selected {
+    width: 100%;
+    height: 117px;
+    position: absolute;
+    bottom: 0;
+    background-color: #DFE6ED;
+    display: flex;
+    align-items: center;
+}
+
+.movie-selected .poster {
+    background-color: #FFFFFF;
+    padding: 6px 6px;
+    margin: 0 12px;
+}
+
+.movie-selected .poster img {
+    width: 59px;
+    height: 86px;
+}
+
+.movie-selected .movie-title {
+    font-size: 26px;
+    color: #293845;
+}
