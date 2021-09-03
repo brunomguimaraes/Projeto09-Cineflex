@@ -192,3 +192,25 @@ body {
     margin-top: 40px;
     margin-bottom: 157px;
 }
+
+.data-title {
+    padding: 0 30px;
+    color: #293845;
+    font-size: 24px;
+    margin-bottom: 10px;
+    margin-top: 28px;
+}
+
+.data {
+    padding: 0 30px;
+    margin-bottom: 5px;
+    font-size: 22px;
+    color: #293845;
+}
+
+.end-screen {
+    color: #247A6B;
+    font-weight: 700;
+    width: 180px;
+    margin-left:calc(50% - 90px);
+}

@@ -1,12 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Seat from "./Seat";
 
-export default function Seats() {
+export default function Seats({saveOrder}) {
     const { idSessao } = useParams();
     const [session, setSession] = useState(null);
     const [reserv, setReserv] = useState({ids: [], name: "", cpf: ""});
+    const [isFilled, setIsFilled] = useState(false);
     
     const URL_SESSION = `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSessao}/seats`;
 
@@ -29,7 +30,25 @@ export default function Seats() {
     }
 
     const chooseSeats = () => {
-        console.log(reserv);
+        if (reserv.name === "" || reserv.cpf === "" || reserv.ids.length === 0) {
+            return alert("Prencha todos os campos!");
+        }
+        const isCPFValid = checkCPF();
+        if (!isCPFValid) {
+            return alert("CPF não é válido");
+        }
+        setIsFilled(true);
+        const seats = reserv.ids.sort();
+        saveOrder(session.movie.title, session.day.date, session.name, seats, reserv.name, reserv.cpf);
+    }
+
+    const checkCPF = () => {
+        const isAllNumbers = Number(reserv.cpf);
+        if (reserv.cpf.length !== 11 || isAllNumbers === NaN) {
+            return false;
+        } else {
+            return true;
+        }
     }
     
     return (
@@ -56,7 +75,9 @@ export default function Seats() {
             <input className="input-box" type="text" placeholder="Digite seu nome..." value={reserv.name} onChange={e => setReserv({...reserv, name: e.target.value})}/>
             <p className="input-title">CPF do comprador:</p>
             <input className="input-box" type="text" placeholder="Digite seu CPF..." value={reserv.cpf} onChange={e => setReserv({...reserv, cpf: e.target.value})}/>
-            <button className="choose-seats" onClick={chooseSeats}>Reservar assento(s)</button>
+            <Link to={isFilled ? '/sucesso' : '#'}>
+                <button className="choose-seats" onMouseDown={chooseSeats}>Reservar assento(s)</button>
+            </Link>
             <footer className="movie-selected">
                 <div className="poster">
                     <img src={session ? session.movie.posterURL : ""} alt="Poster"/>
