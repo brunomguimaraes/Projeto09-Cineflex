@@ -6,6 +6,8 @@ import Seat from "./Seat";
 export default function Seats() {
     const { idSessao } = useParams();
     const [session, setSession] = useState(null);
+    const [reserv, setReserv] = useState({ids: [], name: "", cpf: ""});
+    
     const URL_SESSION = `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSessao}/seats`;
 
     useEffect(() => {
@@ -16,11 +18,22 @@ export default function Seats() {
         });
     }, []);
 
+    const saveSeat = (id, selected) => {
+        if (selected) {
+            reserv.ids = reserv.ids.filter(num => num !== id);
+            setReserv({...reserv});
+        } else {
+            reserv.ids = [...reserv.ids, id]
+            setReserv({...reserv});
+        }
+    }
+    
+
     return (
         <>
             <h1 className="section-title">Selecione o(s) assento(s)</h1>
             <ul className="seats">
-            {session ? session.seats.map(seat => <Seat isAvailable={seat.isAvailable} name={seat.name} />) : ""}
+            {session ? session.seats.map(seat => <Seat isAvailable={seat.isAvailable} name={seat.name} saveSeat={saveSeat}/>) : ""}
             </ul>
             <ul className="seats-information">
                 <li className="category">
@@ -28,7 +41,7 @@ export default function Seats() {
                     <p>Selecionado</p>
                 </li>
                 <li className="category">
-                    <div className="seat available"></div>
+                    <div className="seat"></div>
                     <p>Disponível</p>
                 </li>
                 <li className="category">
