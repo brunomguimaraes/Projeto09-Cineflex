@@ -5,8 +5,7 @@ import Schedule from "./Schedule";
 
 export default function Sessions() {
     const { idFilme } = useParams();
-    const [movie, setMovie] = useState([]);
-    const [sessions, setSessions] = useState([]);
+    const [movie, setMovie] = useState(null);
     const URL_MOVIE = `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies/${idFilme}/showtimes`;
 
     useEffect(() => {
@@ -14,7 +13,6 @@ export default function Sessions() {
 
         promise.then((answer) => {
             setMovie(answer.data);
-            setSessions(answer.data.days);
         });
     }, []);
 
@@ -22,13 +20,13 @@ export default function Sessions() {
         <>
             <h1 className="section-title">Selecione o horário</h1>
             <ul className="sessions-list">
-                {sessions.map(day => <Schedule weekday={day.weekday} date={day.date} showtimes={day.showtimes} />)}
+                {movie ? movie.days.map(day => <Schedule weekday={day.weekday} date={day.date} showtimes={day.showtimes} />) : ""}
             </ul>
             <footer className="movie-selected">
                 <div className="poster">
-                    <img src={movie.posterURL} />
+                    <img src={movie ? movie.posterURL : ""} />
                 </div>
-                <p className="movie-title">{movie.title}</p>
+                <p className="movie-title">{movie ? movie.title : ""}</p>
             </footer>
         </>
     );

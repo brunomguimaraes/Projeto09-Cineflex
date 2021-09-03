@@ -2,6 +2,7 @@
 
 * {
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
 }
 
 body {
@@ -101,4 +102,92 @@ body {
 .movie-selected .movie-title {
     font-size: 26px;
     color: #293845;
+}
+
+.movie-selected .movie-title .date {
+    display: block;
+}
+
+.seats {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    column-gap: 7px;
+    row-gap: 14px;
+    padding: 0 30px;
+    margin-bottom: 20px;
+}
+
+.seats-information {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+.seats-information .category {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 13px;
+}
+
+.seats-information .seat {
+    margin-bottom: 8px;
+}
+
+.seat {
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    border-radius: 17px;
+    color: #000000;
+    border: 1px solid #7B8B99;
+    background-color: #C3CFD9;
+    font-size: 11px;
+    text-align: center;
+}
+
+.seat.occupied {
+    border: 1px solid #F7C52B;
+    background-color: #FBE192;
+}
+
+.seat.selected {
+    border: 1px solid #1AAE9E;
+    background-color: #8DD7CF;
+}
+
+.input-title {
+    font-size: 18px;
+    color: #293845;
+    padding: 0 30px;
+}
+
+.input-box {
+    width: calc(100% - 60px);
+    height: 51px;
+    margin: 4px 30px 16px;
+    border: 1px solid #D5D5D5;
+    border-radius: 3px;
+    font-size: 18px;
+    font-style: italic;
+    padding-left: 15px;
+}
+
+::placeholder {
+    color: #AFAFAF;
+}
+
+.choose-seats {
+    width: 225px;
+    height: 42px;
+    border-radius: 3px;
+    color: #FFFFFF;
+    background-color: #E8833A;
+    font-size: 18px;
+    border: none;
+    margin-left: calc(50% - 112px);
+    margin-top: 40px;
+    margin-bottom: 157px;
 }
