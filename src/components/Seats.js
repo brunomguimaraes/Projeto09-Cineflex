@@ -27,8 +27,11 @@ export default function Seats() {
             setReserv({...reserv});
         }
     }
-    
 
+    const chooseSeats = () => {
+        console.log(reserv);
+    }
+    
     return (
         <>
             <h1 className="section-title">Selecione o(s) assento(s)</h1>
@@ -50,13 +53,13 @@ export default function Seats() {
                 </li>
             </ul>
             <p className="input-title">Nome do comprador:</p>
-            <input className="input-box" type="text" placeholder="Digite seu nome..." />
+            <input className="input-box" type="text" placeholder="Digite seu nome..." value={reserv.name} onChange={e => setReserv({...reserv, name: e.target.value})}/>
             <p className="input-title">CPF do comprador:</p>
-            <input className="input-box" type="text" placeholder="Digite seu CPF..." />
-            <button className="choose-seats">Reservar assento(s)</button>
+            <input className="input-box" type="text" placeholder="Digite seu CPF..." value={reserv.cpf} onChange={e => setReserv({...reserv, cpf: e.target.value})}/>
+            <button className="choose-seats" onClick={chooseSeats}>Reservar assento(s)</button>
             <footer className="movie-selected">
                 <div className="poster">
-                    <img src={session ? session.movie.posterURL : ""} />
+                    <img src={session ? session.movie.posterURL : ""} alt="Poster"/>
                 </div>
                 <p className="movie-title">{session ? session.movie.title : ""}<span className="date">{session ? session.day.weekday : ""} - {session ? session.name : ""}</span></p>
             </footer>

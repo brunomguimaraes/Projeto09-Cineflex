@@ -24,7 +24,7 @@ export default function Sessions() {
             </ul>
             <footer className="movie-selected">
                 <div className="poster">
-                    <img src={movie ? movie.posterURL : ""} />
+                    <img src={movie ? movie.posterURL : ""} alt="Poster"/>
                 </div>
                 <p className="movie-title">{movie ? movie.title : ""}</p>
             </footer>
