@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link, useHistory } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import Seat from "./Seat";
 
 export default function Seats({saveOrder}) {
@@ -36,7 +36,8 @@ export default function Seats({saveOrder}) {
         if (!isCPFValid) {
             return alert("CPF não é válido");
         }
-        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many", userInfo);
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many", userInfo)
+        .then(response => console.log(response));
         setIsFilled(true);
         const seats = userInfo.ids.sort();
         saveOrder(session.movie.title, session.day.date, session.name, seats, userInfo.name, userInfo.cpf, idSessao);
@@ -50,16 +51,9 @@ export default function Seats({saveOrder}) {
             return true;
         }
     }
-
-    const history = useHistory(); 
-
-    const goToPreviousPage = () => {
-        history.push(`/filme/${session.movie.id}`);
-    };
     
     return (
         <>
-            <button className="return-button" onClick={goToPreviousPage}>{"<"}</button>
             <h1 className="section-title">Selecione o(s) assento(s)</h1>
             <ul className="seats">
             {session ? session.seats.map(seat => <Seat key={seat.id} isAvailable={seat.isAvailable} name={seat.name} saveSeat={saveSeat}/>) : ""}

@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter, Switch, Route } from "react-router-dom";
 import { useState } from "react";
 import Header from "./Header";
 import Home from "./Home";
@@ -9,7 +9,7 @@ import Review from "./Review";
 export default function App() {
   const [order, setOrder] = useState({});
 
-  const saveOrder = (movie, date, time, seats, name, cpf, idSessao) => {
+  const saveOrder = (movie, date, time, seats, name, cpf) => {
     setOrder({
       movie: movie,
       date: date,
@@ -17,7 +17,6 @@ export default function App() {
       seats: seats,
       name: name,
       cpf: cpf,
-      idSessao: idSessao
     });
   }
 
@@ -26,7 +25,7 @@ export default function App() {
   }
 
   return (
-    <Router>
+    <BrowserRouter>
       <Header />
       <Switch>
         <Route exact path='/'>
@@ -42,6 +41,6 @@ export default function App() {
           <Review order={order} clearOrder={clearOrder}/>
         </Route>
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }

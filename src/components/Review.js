@@ -1,15 +1,10 @@
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export default function Review({order, clearOrder}) {
-    const {movie, date, time, seats, name, cpf, idSessao} = order;
-    const history = useHistory(); 
+    const {movie, date, time, seats, name, cpf} = order;
 
-    const goToPreviousPage = () => {
-        history.push(`/sessao/${idSessao}`);
-    };
     return (
         <>
-            <button className="return-button" onClick={goToPreviousPage}>{"<"}</button>
             <h1 className="section-title end-screen">Pedido feito com sucesso!</h1>
             <h2 className="data-title">Filme e sessão</h2>
             <p className="data">{movie}</p>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import axios from "axios";
 import Schedule from "./Schedule";
 
@@ -15,15 +15,8 @@ export default function Sessions() {
         });
     }, []);
 
-    const history = useHistory(); 
-
-    const goToPreviousPage = () => {
-        history.push("/");
-    };
-
     return (
         <>
-            <button className="return-button" onClick={goToPreviousPage}>{"<"}</button>
             <h1 className="section-title">Selecione o horário</h1>
             <ul className="sessions-list">
                 {movie ? movie.days.map(day => <Schedule key={day.id} weekday={day.weekday} date={day.date} showtimes={day.showtimes} />) : ""}
