@@ -1,61 +1,68 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useParams, Link } from 'react-router-dom';
+import { useParams, Link, useHistory } from 'react-router-dom';
 import Seat from "./Seat";
 
 export default function Seats({saveOrder}) {
     const { idSessao } = useParams();
     const [session, setSession] = useState(null);
-    const [reserv, setReserv] = useState({ids: [], name: "", cpf: ""});
+    const [userInfo, setUserInfo] = useState({ids: [], name: "", cpf: ""});
     const [isFilled, setIsFilled] = useState(false);
     
     const URL_SESSION = `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/showtimes/${idSessao}/seats`;
 
     useEffect(() => {
-        const promise = axios.get(URL_SESSION);
-
-        promise.then((answer) => {
+        axios.get(URL_SESSION)
+        .then((answer) => {
             setSession(answer.data);
         });
     }, []);
 
     const saveSeat = (id, selected) => {
         if (selected) {
-            reserv.ids = reserv.ids.filter(num => num !== id);
-            setReserv({...reserv});
+            userInfo.ids = userInfo.ids.filter(num => num !== id);
+            setUserInfo({...userInfo});
         } else {
-            reserv.ids = [...reserv.ids, id]
-            setReserv({...reserv});
+            userInfo.ids = [...userInfo.ids, id]
+            setUserInfo({...userInfo});
         }
     }
 
     const chooseSeats = () => {
-        if (reserv.name === "" || reserv.cpf === "" || reserv.ids.length === 0) {
+        if (userInfo.name === "" || userInfo.cpf === "" || userInfo.ids.length === 0) {
             return alert("Prencha todos os campos!");
         }
         const isCPFValid = checkCPF();
         if (!isCPFValid) {
             return alert("CPF não é válido");
         }
+        axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many", userInfo);
         setIsFilled(true);
-        const seats = reserv.ids.sort();
-        saveOrder(session.movie.title, session.day.date, session.name, seats, reserv.name, reserv.cpf);
+        const seats = userInfo.ids.sort();
+        saveOrder(session.movie.title, session.day.date, session.name, seats, userInfo.name, userInfo.cpf, idSessao);
     }
 
     const checkCPF = () => {
-        const isAllNumbers = Number(reserv.cpf);
-        if (reserv.cpf.length !== 11 || isAllNumbers === NaN) {
+        const isAllNumbers = Number(userInfo.cpf);
+        if (userInfo.cpf.length !== 11 || isNaN(isAllNumbers)) {
             return false;
         } else {
             return true;
         }
     }
+
+    const history = useHistory(); 
+
+    const goToPreviousPage = () => {
+        history.push(`/filme/${session.movie.id}`);
+    };
     
     return (
         <>
+            <button className="return-button" onClick={goToPreviousPage}>{"<"}</button>
             <h1 className="section-title">Selecione o(s) assento(s)</h1>
             <ul className="seats">
-            {session ? session.seats.map(seat => <Seat isAvailable={seat.isAvailable} name={seat.name} saveSeat={saveSeat}/>) : ""}
+            {session ? session.seats.map(seat => <Seat key={seat.id} isAvailable={seat.isAvailable} name={seat.name} saveSeat={saveSeat}/>) : ""}
             </ul>
             <ul className="seats-information">
                 <li className="category">
@@ -72,9 +79,9 @@ export default function Seats({saveOrder}) {
                 </li>
             </ul>
             <p className="input-title">Nome do comprador:</p>
-            <input className="input-box" type="text" placeholder="Digite seu nome..." value={reserv.name} onChange={e => setReserv({...reserv, name: e.target.value})}/>
+            <input className="input-box" type="text" placeholder="Digite seu nome..." value={userInfo.name} onChange={e => setUserInfo({...userInfo, name: e.target.value})}/>
             <p className="input-title">CPF do comprador:</p>
-            <input className="input-box" type="text" placeholder="Digite seu CPF..." value={reserv.cpf} onChange={e => setReserv({...reserv, cpf: e.target.value})}/>
+            <input className="input-box" type="text" placeholder="Digite seu CPF..." value={userInfo.cpf} onChange={e => setUserInfo({...userInfo, cpf: e.target.value})}/>
             <Link to={isFilled ? '/sucesso' : '#'}>
                 <button className="choose-seats" onMouseDown={chooseSeats}>Reservar assento(s)</button>
             </Link>

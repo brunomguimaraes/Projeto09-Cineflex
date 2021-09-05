@@ -9,14 +9,15 @@ import Review from "./Review";
 export default function App() {
   const [order, setOrder] = useState({});
 
-  const saveOrder = (movie, date, time, seats, name, cpf) => {
+  const saveOrder = (movie, date, time, seats, name, cpf, idSessao) => {
     setOrder({
       movie: movie,
       date: date,
       time: time,
       seats: seats,
       name: name,
-      cpf: cpf
+      cpf: cpf,
+      idSessao: idSessao
     });
   }
 

@@ -5,7 +5,7 @@ export default function Schedule({weekday, date, showtimes}) {
         <li className="schedule">
             <p className="date">{weekday} - {date}</p>
             <ul className="sessions">
-                {showtimes.map(showtime => <Session idSessao={showtime.id} time={showtime.name}/>)}
+                {showtimes.map(showtime => <Session key={showtime.id} idSessao={showtime.id} time={showtime.name}/>)}
             </ul>
         </li>
     );

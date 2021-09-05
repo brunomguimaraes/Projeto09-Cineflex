@@ -7,9 +7,8 @@ export default function Home() {
     const URL_MOVIES = "https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies";
 
     useEffect(() => {
-        const promise = axios.get(URL_MOVIES);
-
-        promise.then((answer) => {
+        axios.get(URL_MOVIES)
+        .then((answer) => {
             setMovies(answer.data);
         });
     }, []);
@@ -18,7 +17,7 @@ export default function Home() {
         <>
             <h1 className="section-title">Selecione o filme</h1>
             <ul className="movie-list">
-                {movies.map(movie => <Movie idFilme={movie.id} img={movie.posterURL} />)}
+                {movies.map(movie => <Movie key={movie.id} idFilme={movie.id} img={movie.posterURL} />)}
             </ul>
         </>
     );

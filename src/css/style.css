@@ -17,6 +17,8 @@ body {
     color: #E8833A;
     font-size: 34px;
     text-align: center;
+    position: fixed;
+    top: 0;
 }
 
 .section-title {
@@ -25,6 +27,7 @@ body {
     text-align: center;
     font-weight: 400;
     padding: 50px 0px;
+    margin-top: 67px;
 }
 
 .movie-list {
@@ -213,4 +216,22 @@ body {
     font-weight: 700;
     width: 180px;
     margin-left:calc(50% - 90px);
+}
+
+.return-button {
+    position: fixed;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    z-index: 1;
+    top: 8px;
+    left: 8px;
+    color: red;
+    font-size: 35px;
+    text-align: center;
+    border: none;
+    border-radius: 40px;
+    box-shadow: 0 2px 1px 1px rgba(95, 93, 93, 0.288);
+    background-color: #d9e2e9;
+    color: #E8833A;
 }
